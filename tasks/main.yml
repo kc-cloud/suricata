@@ -1,0 +1,33 @@
+- name: Add apt repository
+  apt_repository:
+    repo: ppa:oisf/suricata-stable
+
+- name: Install suricata
+  apt:
+    name: 
+    - suricata
+    - suricata-update
+    state: present
+
+- name: Configure default file
+  template:
+    src: suricata.j2
+    dest: /etc/default/suricata
+    mode: "0644"
+
+- name: Configure surciata
+  copy:
+    src: suricata.yaml
+    dest: /etc/suricata/suricata.yaml
+    mode: "0644"
+
+- name: Configure surciata
+  template:
+    src: suricata.service.j2
+    dest: /etc/systemd/system/suricata.service
+
+- name: Start service suricata
+  service:
+    name: suricata
+    enabled: true
+    state: started

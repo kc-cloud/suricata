@@ -1,0 +1,9 @@
+[Unit]
+Description=Suricata IDS/IPS
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/suricata -c /etc/suricata/suricata.yaml -i {{ interface }}
+
+[Install]
+WantedBy=default.target
